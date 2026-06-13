@@ -1,0 +1,31 @@
+config:
+  run_as_user: 1000
+  compose_path: ./docker-compose.yml
+ports:
+  - "server:3000:3000:true"  # Web UI
+  - "server:22:2222:false" # SSH Port
+persistent_volumes:
+  - path: ./gitea-data
+    is_optional: false
+  - path: ./postgres-data
+    is_optional: false
+variables:
+  - name: DOMAIN
+    description: "The full domain for Gitea (e.g., git.kcd.works)."
+    type: "string"
+    required: true
+  - name: POSTGRES_USER
+    description: "Database username for Gitea."
+    type: "string"
+    required: true
+    default: "gitea"
+  - name: POSTGRES_PASSWORD
+    description: "Database password for Gitea."
+    type: "string"
+    required: true
+    is_password: true
+  - name: POSTGRES_DB
+    description: "Database name for Gitea."
+    type: "string"
+    required: true
+    default: "gitea"
